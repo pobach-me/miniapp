@@ -7,7 +7,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/umbrellajs"></script>
     
     <title>Enroll</title>
     <style>
@@ -87,24 +87,24 @@
             </div>
         </nav>
 
-        <div class="container">
+        <div class="container procedure">
             <span>Процедура</span>
-            <a data-tx="procesure" class="waves-effect waves-light btn">button#1</a>
+            <a data-tx="procesure" data-procedure="1" class="waves-effect waves-light btn">procedura</a>
         </div>
 
-        <div class="container hidden">
+        <div class="container hidden calendar">
             <span>Календарь</span>
-            <a data-tx="calendar" class="waves-effect waves-light btn">button#1</a>
+            <a data-tx="calendar" class="waves-effect waves-light btn">calendar</a>
         </div>
 
-        <div class="container hidden">
+        <div class="container hidden time">
             <span>Время</span>
-            <a data-tx="time" class="waves-effect waves-light btn">button#1</a>
+            <a data-tx="time" class="waves-effect waves-light btn">time</a>
         </div>
 
-        <div class="container hidden">
+        <div class="container hidden result">
             <span>результат</span>
-            <a data-tx="result" class="waves-effect waves-light btn">button#1</a>
+            <a data-tx="result" class="waves-effect waves-light btn">result</a>
         </div>
 
 
@@ -132,23 +132,6 @@
         Telegram.WebApp.MainButton.show();
 
 
-        // Function to call showPopup API
-        /*
-        function showPopup() {
-            Telegram.WebApp.showPopup({
-                title: 'Title',
-                message: 'Some message',
-                buttons: [
-                    {id: 'link', type: 'default', text: 'Open ton.org'},
-                    {type: 'cancel'},
-                ]
-            }, function(btn) {
-                if (btn === 'link') {
-                    Telegram.WebApp.openLink('https://ton.org/');
-                }
-            });
-        };*/
-
         function setViewportData() {
             var sizeEl = document.getElementById('viewport-params-size');
             sizeEl.innerText = 'width: ' + window.innerWidth + ' x ' + 
@@ -168,12 +151,29 @@
         });
 
         let buttons = document.querySelectorAll(".btn")
+        
         console.log(`click: ${buttons}`)
         buttons.forEach((item) => {
             let tx = item.dataset.tx
 
             item.addEventListener('click', () => {
-                console.log(`click: ${tx}`)
+                console.log(tx)
+                if (tx == 'procesure') {
+                    u(".procedure").addClass("hidden");
+                    u(".calendar").removeClass("hidden")
+                }
+                if (tx == 'calendar') {
+                    u(".calendar").addClass("hidden");
+                    u(".time").removeClass("hidden")
+                }
+                if (tx == 'time') {
+                    u(".calendar").addClass("hidden");
+                    u(".result").removeClass("hidden")
+                }
+                if (tx == 'result') {
+                    u(".time").addClass("hidden");
+                    u(".result").removeClass("hidden")
+                }
             })
         });
 
