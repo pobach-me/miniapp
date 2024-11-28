@@ -73,6 +73,10 @@
         .show {
             display: block;
         }
+        .procedure {
+            border-color: black;
+            border-width: 10px;
+        }
     </style>
 </head>
 
@@ -88,8 +92,16 @@
         </nav>
 
         <div class="container procedure">
-            <span>Процедура</span>
-            <a data-tx="procesure" data-procedure="1" class="waves-effect waves-light btn">procedura</a>
+            <div class="row">
+                <div class="grid-example col s12">
+                    <span>Процедура</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="grid-example col s12">
+                    <a data-tx="procesure" data-procedure="1" class="waves-effect waves-light btn">procedura</a>
+                </div>    
+            </div>
         </div>
 
         <div class="container hidden calendar">
