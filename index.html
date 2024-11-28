@@ -6,8 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/umbrellajs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+
     
     <title>Enroll</title>
     <style>
@@ -105,7 +109,7 @@
 
         <div class="container hidden calendar">
             <!-- <a data-tx="calendar" class="waves-effect waves-light btn">calendar</a> -->
-            <input type="text" class="datepicker">
+            <div id="datepicker"></div>
         </div>
 
         <div class="container hidden time">
@@ -161,9 +165,15 @@
             document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
         });
 
+        // when we have a free enroll window
+        let next_day = dayjs().add(1, 'day').toDate()
+        new AirDatepicker('#datepicker', {
+            inline: true,
+            selectedDates: [next_day]
+        });
+
         let buttons = document.querySelectorAll(".btn")
-        
-        console.log(`click: ${buttons}`)
+
         buttons.forEach((item) => {
             let tx = item.dataset.tx
 
