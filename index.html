@@ -11,7 +11,6 @@
     <script src="https://cdn.jsdelivr.net/npm/umbrellajs"></script>
     <script src="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-
     
     <title>Enroll</title>
     <style>
@@ -108,8 +107,18 @@
         </div>
 
         <div class="container hidden calendar">
-            <!-- <a data-tx="calendar" class="waves-effect waves-light btn">calendar</a> -->
-            <div id="datepicker"></div>
+            <div class="row">
+                <div class="grid-example col s12">
+                    <div id="datepicker"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="grid-example col s12">
+                    <span class="new badge blue">13:00</span>
+                    <span class="new badge blue">15:00</span>
+                    <span class="new badge blue">17:00</span>
+                </div>
+            </div>
         </div>
 
         <div class="container hidden time">
@@ -164,12 +173,20 @@
         Telegram.WebApp.onEvent('themeChanged', function() {
             document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
         });
-
+        
         // when we have a free enroll window
         let next_day = dayjs().add(1, 'day').toDate()
+        let selected_dates = []
+        for(let i = 1; i < 10; i++) {
+            selected_dates.push(dayjs().add(i, 'day').toDate())
+        }
         new AirDatepicker('#datepicker', {
             inline: true,
-            selectedDates: [next_day]
+            startDate: new Date(),
+            minDate: next_day,
+            fixedHeight: true,
+            firstDate: 1,
+            selectedDates: selected_dates
         });
 
         let buttons = document.querySelectorAll(".btn")
