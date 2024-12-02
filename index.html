@@ -106,7 +106,7 @@
             </div>
         </div>
 
-        <div class="container calendar">
+        <div class="container calendar hidden">
             <div class="row">
                 <div class="col offset-s4 s4">
                     <div id="datepicker"></div>
@@ -119,11 +119,9 @@
                     <span class="badge blue">17:00</span>
                 </div>
             </div>
-        </div>
-
-        <div class="container hidden time">
-            <span>Время</span>
-            <a data-tx="time" class="waves-effect waves-light btn">time</a>
+            <div class="col s12">
+                <a data-tx="calendar" data-procedure="1" class="waves-effect waves-light btn">procedura</a>
+            </div>
         </div>
 
         <div class="container hidden result">
@@ -202,14 +200,10 @@
                 }
                 if (tx == 'calendar') {
                     u(".calendar").addClass("hidden");
-                    u(".time").removeClass("hidden")
-                }
-                if (tx == 'time') {
-                    u(".calendar").addClass("hidden");
                     u(".result").removeClass("hidden")
                 }
                 if (tx == 'result') {
-                    u(".time").addClass("hidden");
+                    u(".calendar").addClass("hidden");
                     u(".result").removeClass("hidden")
                 }
             })
