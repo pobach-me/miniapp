@@ -76,12 +76,9 @@
         .show {
             display: block;
         }
-        .procedure {
-            border: 10px solid black !important;
-        }
+        
         .btn {
             color: var(--tg-theme-button-text-color) !important;
-            background: var(--tg-theme-button-color) !important;
             width: 100% !important;
         }
         h1 {
@@ -114,9 +111,9 @@
             </div>
             <div class="row">
                 <div class="col offset-s4 s4">
-                    <span class="badge blue">13:00</span>
-                    <span class="badge blue">15:00</span>
-                    <span class="badge blue">17:00</span>
+                    <span class="badge">13:00</span>
+                    <span class="badge">15:00</span>
+                    <span class="badge">17:00</span>
                 </div>
             </div>
             <div class="col s12">
@@ -127,6 +124,14 @@
         <div class="container hidden result">
             <span>результат</span>
             <a data-tx="result" class="waves-effect waves-light btn">result</a>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="progress">
+                    <div id="progress" class="determinate" style="width: 30%"></div>
+                </div>
+            </div>
         </div>
 
 
@@ -187,6 +192,8 @@
             selectedDates: selected_dates
         });
 
+        let pBar = document.querySelector("#progress")
+
         let buttons = document.querySelectorAll(".btn")
 
         buttons.forEach((item) => {
@@ -196,13 +203,16 @@
                 console.log(tx)
                 if (tx == 'procesure') {
                     u(".procedure").addClass("hidden");
-                    u(".calendar").removeClass("hidden")
+                    u(".calendar").removeClass("hidden");
+                    pBar.style.width="60%";
                 }
                 if (tx == 'calendar') {
                     u(".calendar").addClass("hidden");
                     u(".result").removeClass("hidden")
+                    pBar.style.width="90%";
                 }
                 if (tx == 'result') {
+                    pBar.style.width="100%"
                     u(".calendar").addClass("hidden");
                     u(".result").removeClass("hidden")
                 }
