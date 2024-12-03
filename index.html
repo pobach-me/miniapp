@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.css">
     <script src="https://cdn.jsdelivr.net/npm/umbrellajs"></script>
     <script src="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
@@ -79,53 +78,63 @@
         
         .btn {
             color: var(--tg-theme-button-text-color) !important;
-            width: 100% !important;
         }
         h1 {
             margin: 0;
             padding: 0;
         }
+        .custom-column-margin {
+            margin-bottom: 3% !important;
+        }
+        
     </style>
 </head>
 
 <body>
     <main>
-        <div class="container procedure">
-            <div class="row">
-                <div class="grid-example col s12">
-                    <h1>Процедуры</h1>
-                </div>
+        <div class="container">
+            <div class="procedure ">
+                <div class="columns">
+                    <div class="column is-full has-text-centered">
+                        <button data-tx="procesure" data-procedure="1" class="button btn">procedure#1</button>
+                    </div>
+                </div> 
+                <div class="columns">
+                    <div class="column is-full has-text-centered">
+                        <button data-tx="procesure" data-procedure="2" class="button btn">procedure#2</button>
+                    </div>
+                </div> 
+                <div class="columns">
+                    <div class="column is-full has-text-centered">
+                        <button data-tx="procesure" data-procedure="3" class="button btn">procedure#3</button>
+                    </div>
+                </div>   
             </div>
-            <div class="row">
-                <div class="row s12">
-                    <a data-tx="procesure" data-procedure="1" class="waves-effect waves-light btn">procedura#1</a>
-                </div>
-                <div class="row s12">
-                    <a data-tx="procesure" data-procedure="2" class="waves-effect waves-light btn">procedura#2</a>
-                </div>
-                <div class="row s12">
-                    <a data-tx="procesure" data-procedure="3" class="waves-effect waves-light btn">procedura#3</a>
+
+
+            <div class="calendar hidden">
+                <div class="columns">
+                    <div class="column is-full has-text-centered">
+                        <div id="datepicker"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="container calendar hidden">
-            <div class="row">
-                <div class="col s4">
-                    <div id="datepicker"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s4">
-                    <span class="badge">13:00</span>
-                    <span class="badge">15:00</span>
-                    <span class="badge">17:00</span>
-                </div>
-            </div>
-            <div class="col s12">
-                <a data-tx="calendar" data-procedure="1" class="waves-effect waves-light btn">procedura</a>
-            </div>
+
+        
+
+        <!-- <div class="calendar hidden">
+            <aside class="center small-width small-height padding">
+                <div id="datepicker"></div>
+            </aside>
+            <aside class="center small-width small-height padding">
+                <button class="chip">13:00</button>
+                <button class="chip">15:00</button>
+                <button class="chip">17:00</button>
+            </aside>
         </div>
+
 
         <div class="container hidden result">
             <span>результат</span>
@@ -138,7 +147,7 @@
                     <div id="progress" class="determinate" style="width: 30%"></div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
     </main>
