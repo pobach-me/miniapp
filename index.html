@@ -88,8 +88,11 @@
             margin-bottom: 3% !important;
         }
         progress {
-            /* --bulma-progress-value-background-color: red; */
-            --bulma-progress-value-background-color: var(--tg-theme-button-color) !important;
+            --bulma-progress-value-background-color: red;
+            /* --bulma-progress-value-background-color: var(--tg-theme-button-color) !important; */
+        }
+        .clicked {
+            background-color: var(--tg-theme-button-color);
         }
         
     </style>
@@ -126,9 +129,9 @@
                 </div>
                 <div class="columns is-centered is-mobile">
                     <div class="column is-half">
-                        <span class="tag is-light">13:00</span>
-                        <span class="tag is-light">15:00</span>
-                        <span class="tag is-light">17:00</span>
+                        <button class="procedure-time tag is-light" data-time="13:00">13:00</button>
+                        <button class="procedure-time tag is-light" data-time="15:00">15:00</button>
+                        <button class="procedure-time tag is-light" data-time="17:00">17:00</button>
                     </div>
                 </div>
                 <div class="columns is-centered is-mobile">
@@ -142,8 +145,9 @@
         <div class="container hidden result">
             <div class="columns">
                 <div class="column is-full has-text-centered">
-                    <h3>вы записаны</h3>
-                    <button data-tx="calendar" class="button btn is-fullwidth">ok</button>
+                    <h3>вы записаны!!!</h3>
+                    <div id="result-description"></div>
+                    <button data-tx="result" class="button btn is-fullwidth">ok</button>
                 </div>
             </div>
         </div>
@@ -162,6 +166,37 @@
     <div id="viewport-params-expand"></div>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
+        var c = function(m) { console.log(m); };
+        class Cart {
+            #procedure_id = -1;
+            #date;
+            #time;
+            
+            constructor() {
+
+            }
+
+            fillProcedure(p_id) {
+                this.#procedure_id = p_id;
+            }
+
+            fillDate(date) {
+                this.#date = date;
+            }
+
+            fillTime(time) {
+                this.#time = time;
+            }
+
+            toObj() {
+                return {
+                    'procedure_id': this.#procedure_id,
+                    'date': this.#date,
+                    'time': this.#time
+                }
+            }
+        }
+        var cart = new Cart();
         // Init TWA
         Telegram.WebApp.ready();
 
@@ -178,7 +213,6 @@
             Telegram.WebApp.showAlert('Main Button was clicked')
         });	
         Telegram.WebApp.MainButton.hide();
-
 
         function setViewportData() {
             var sizeEl = document.getElementById('viewport-params-size');
@@ -204,14 +238,19 @@
         for(let i = 1; i < 10; i++) {
             selected_dates.push(dayjs().add(i, 'day').toDate())
         }
-        new AirDatepicker('#datepicker', {
+        let date_picker = new AirDatepicker('#datepicker', {
             inline: true,
             startDate: new Date(),
             minDate: next_day,
             fixedHeight: true,
             firstDate: 1,
-            selectedDates: selected_dates
+            selectedDates: selected_dates,
+            dateFormat: 'dd-MM-yyyy',
+            onSelect: function({date, formattedDate, datepicker}) {
+                cart.fillDate(formattedDate)
+            }
         });
+
 
         function showProgress(value) {
             let pBar = document.querySelector("progress")
@@ -222,16 +261,23 @@
             pBar.value = value;
         }
 
-        
+        document.querySelectorAll(".procedure-time").forEach((item) => {
+            item.addEventListener('click', (el) => {
+                let time = el.target.dataset.time
+                cart.fillTime(time)
+                u(".procedure-time").removeClass("clicked");
+                u(el.target).addClass("clicked");
+            })
+        })
 
         let buttons = document.querySelectorAll(".btn")
 
         buttons.forEach((item) => {
             let tx = item.dataset.tx
 
-            item.addEventListener('click', () => {
-                console.log(tx)
+            item.addEventListener('click', (el) => {
                 if (tx == 'procesure') {
+                    cart.fillProcedure(el.target.dataset.procedure)
                     u(".procedure").addClass("hidden");
                     u(".calendar").removeClass("hidden");
                     showProgress(60);
@@ -243,6 +289,8 @@
                 }
                 if (tx == 'result') {
                     showProgress(100)
+                    u("#result-description").html(JSON.stringify(cart.toObj()))
+                    console.log(cart.toObj())
                     u(".calendar").addClass("hidden");
                     u(".result").removeClass("hidden")
                 }
