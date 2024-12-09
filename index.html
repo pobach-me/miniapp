@@ -88,7 +88,8 @@
             margin-bottom: 3% !important;
         }
         progress {
-            --bulma-progress-value-background-color: var(--tg-theme-button-color) !important;
+            --bulma-progress-value-background-color: red;
+            /* --bulma-progress-value-background-color: #var(--tg-theme-button-color) !important; */
         }
         
     </style>
@@ -147,15 +148,12 @@
             </div>
         </div>
 
-        <div class="container">
-            <div class="columns is-centered is-mobile">
-                <div class="column">
-                    <progress class="progress is-medium" value="10" max="100">
-                        10%
-                    </progress>
-                </div>
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <progress class="progress is-medium" value="10" max="100">
+                </progress>
             </div>
-        </div>
+        </footer>  
 
 
     </main>
@@ -215,7 +213,16 @@
             selectedDates: selected_dates
         });
 
-        let pBar = document.querySelector("#progress")
+        function showProgress(value) {
+            let pBar = document.querySelector("progress")
+            if (pBar == null) {
+                return
+            }
+
+            pBar.value = value;
+        }
+
+        
 
         let buttons = document.querySelectorAll(".btn")
 
@@ -227,15 +234,15 @@
                 if (tx == 'procesure') {
                     u(".procedure").addClass("hidden");
                     u(".calendar").removeClass("hidden");
-                    pBar.style.width="60%";
+                    showProgress(60);
                 }
                 if (tx == 'calendar') {
                     u(".calendar").addClass("hidden");
                     u(".result").removeClass("hidden")
-                    pBar.style.width="90%";
+                    showProgress(90);
                 }
                 if (tx == 'result') {
-                    pBar.style.width="100%"
+                    showProgress(100)
                     u(".calendar").addClass("hidden");
                     u(".result").removeClass("hidden")
                 }
