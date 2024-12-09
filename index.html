@@ -87,6 +87,9 @@
         .custom-column-margin {
             margin-bottom: 3% !important;
         }
+        progress {
+            color: var(--tg-theme-button-text-color) !important;
+        }
         
     </style>
 </head>
@@ -135,33 +138,26 @@
             </div>
         </div>
 
-
-        
-
-        <!-- <div class="calendar hidden">
-            <aside class="center small-width small-height padding">
-                <div id="datepicker"></div>
-            </aside>
-            <aside class="center small-width small-height padding">
-                <button class="chip">13:00</button>
-                <button class="chip">15:00</button>
-                <button class="chip">17:00</button>
-            </aside>
-        </div>
-
-
         <div class="container hidden result">
-            <span>результат</span>
-            <a data-tx="result" class="waves-effect waves-light btn">result</a>
+            <div class="columns is-centered is-mobile">
+                <div class="column">
+                    <h3>вы записаны</h3>
+                </div>
+                <div class="column">
+                    <button data-tx="calendar" class="button btn is-fullwidth">ok</button>
+                </div>
+            </div>
         </div>
 
         <div class="container">
-            <div class="row">
-                <div class="progress">
-                    <div id="progress" class="determinate" style="width: 30%"></div>
+            <div class="columns is-centered is-mobile">
+                <div class="column">
+                    <progress class="progress is-medium" value="10" max="100">
+                        10%
+                    </progress>
                 </div>
             </div>
-        </div> -->
+        </div>
 
 
     </main>
