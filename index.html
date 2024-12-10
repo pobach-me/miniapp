@@ -131,11 +131,7 @@
                     <div class="column"></div>
                     <div class="column">
                         <input id="datepicker" class="input" type="date">
-                        
                         <div id="times" class="block mt-6">
-                            <!-- <button class="procedure-time tag is-light" data-time="13:00">13:00</button>
-                            <button class="procedure-time tag is-light" data-time="15:00">15:00</button>
-                            <button class="procedure-time tag is-light" data-time="17:00">17:00</button> -->
                         </div>
                     </div>
                     <div class="column"></div>
@@ -324,6 +320,10 @@
             showProgress(90);
         });
 
+        function sendEnroll(obj) {
+
+        }
+
         document.getElementById("notify").addEventListener('click', (el) => {
             if (el.target == null) {
                 return
@@ -340,7 +340,9 @@
             cart.fillNotify(parseInt(el.target.dataset.notify, 10))
             // close tg
             showProgress(100)
-            c(cart.toObj())
+            sendEnroll(cart.toObj())
+            Telegram.WebApp.close()
+            
         });
 
         let buttons = document.querySelectorAll(".btn")
