@@ -132,17 +132,17 @@
                     <div class="column">
                         <input id="datepicker" class="input" type="date">
                         
-                        <div class="block mt-6">
-                            <button class="procedure-time tag is-light" data-time="13:00">13:00</button>
+                        <div id="times" class="block mt-6">
+                            <!-- <button class="procedure-time tag is-light" data-time="13:00">13:00</button>
                             <button class="procedure-time tag is-light" data-time="15:00">15:00</button>
-                            <button class="procedure-time tag is-light" data-time="17:00">17:00</button>
+                            <button class="procedure-time tag is-light" data-time="17:00">17:00</button> -->
                         </div>
                     </div>
                     <div class="column"></div>
                 </div>
                 <div class="columns is-centered is-mobile">
                     <div class="column">
-                        <button data-tx="calendar" class="button btn is-fullwidth">next</button>
+                        <button id="calendar-btn" data-tx="calendar" class="button btn is-fullwidth" disabled>next</button>
                     </div>
                 </div>
             </div>
@@ -192,6 +192,14 @@
 
             fillTime(time) {
                 this.#time = time;
+            }
+
+            hasDate() {
+                return this.#date != null;
+            }
+
+            hasTime() {
+                return this.#time != null;
             }
 
             toObj() {
@@ -259,8 +267,22 @@
         });
 
         calendars[0].on('select', ins => {
-            cart.fillDate(ins.data.value())
+            let date = ins.data.value();
+            cart.fillDate(date)
+            let times = getAvailableTime(date);
+            let html = "";
+            for (var i = 0; i < times.length; i++) {
+                let t = times[i];
+                let tmp = `<button class="procedure-time tag is-light" data-time="${t}">${t}</button>`
+                html += tmp;
+            }
+
+            u("#times").html(html);
         })
+
+        function getAvailableTime(dateValue) {
+            return ['13-00', '15:00', '17:00']
+        }
 
         function showProgress(value) {
             let pBar = document.querySelector("progress")
@@ -271,13 +293,18 @@
             pBar.value = value;
         }
 
-        document.querySelectorAll(".procedure-time").forEach((item) => {
-            item.addEventListener('click', (el) => {
-                let time = el.target.dataset.time
-                cart.fillTime(time)
-                u(".procedure-time").removeClass("clicked");
-                u(el.target).addClass("clicked");
-            })
+        document.getElementById("times").addEventListener('click', (el) => {
+            if (el.target == null) {
+                return
+            }
+            if (!u(el.target).hasClass('procedure-time')) {
+                return
+            }
+            let time = el.target.dataset.time
+            cart.fillTime(time)
+            u(".procedure-time").removeClass("clicked");
+            u(el.target).addClass("clicked");
+            u("#calendar-btn").attr('disabled', false)
         })
 
         let buttons = document.querySelectorAll(".btn")
