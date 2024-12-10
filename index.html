@@ -293,6 +293,7 @@
             }
 
             u("#times").html(html);
+            showProgress(60);
         })
 
         function getAvailableTime(dateValue) {
@@ -357,7 +358,6 @@
                 if (tx == 'calendar') {
                     u(".calendar").addClass("hidden");
                     u(".result").removeClass("hidden")
-                    showProgress(60);
                 }
                 if (tx == 'result') {
                     u("#result-description").html(JSON.stringify(cart.toObj()))
