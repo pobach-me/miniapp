@@ -6,10 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-calendar@7.1.1/dist/css/bulma-calendar.min.css">
     <script src="https://cdn.jsdelivr.net/npm/umbrellajs"></script>
-    <script src="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/air-datepicker@3.5.3/air-datepicker.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bulma-calendar@7.1.1/dist/js/bulma-calendar.min.js"></script>
     
     <title>Enroll</title>
     <style>
@@ -121,18 +123,18 @@
 
 
             <div class="calendar hidden">
-                <div class="columns is-centered is-mobile">
+                <div class="columns is-centered">
+                    <div class="column"></div>
                     <div class="column">
-                        <div id="datepicker"></div>
+                        <input id="datepicker" class="input" type="date">
+                        
+                        <div class="block mt-6">
+                            <button class="procedure-time tag is-light" data-time="13:00">13:00</button>
+                            <button class="procedure-time tag is-light" data-time="15:00">15:00</button>
+                            <button class="procedure-time tag is-light" data-time="17:00">17:00</button>
+                        </div>
                     </div>
-                    
-                </div>
-                <div class="columns is-centered is-mobile">
-                    <div class="column is-half">
-                        <button class="procedure-time tag is-light" data-time="13:00">13:00</button>
-                        <button class="procedure-time tag is-light" data-time="15:00">15:00</button>
-                        <button class="procedure-time tag is-light" data-time="17:00">17:00</button>
-                    </div>
+                    <div class="column"></div>
                 </div>
                 <div class="columns is-centered is-mobile">
                     <div class="column">
@@ -238,18 +240,37 @@
         for(let i = 1; i < 10; i++) {
             selected_dates.push(dayjs().add(i, 'day').toDate())
         }
-        let date_picker = new AirDatepicker('#datepicker', {
-            inline: true,
-            startDate: new Date(),
-            minDate: next_day,
-            fixedHeight: true,
-            firstDate: 1,
-            selectedDates: selected_dates,
+
+        var calendars = bulmaCalendar.attach('#datepicker', {
+            type: 'date',
             dateFormat: 'dd-MM-yyyy',
-            onSelect: function({date, formattedDate, datepicker}) {
-                cart.fillDate(formattedDate)
-            }
+            showHeader: false,
+            showFooter: false,
+            showButtons: false,
+            startDate: next_day,
+            minDate: next_day,
+            //maxDate: TODO from calendar
+            // disabledDates: []
+            displayMode: 'inline'
         });
+
+        calendars[0].on('select', ins => {
+            cart.fillDate(ins.data.value())
+           
+        })
+
+        // let date_picker = new AirDatepicker('#datepicker', {
+        //     inline: true,
+        //     startDate: new Date(),
+        //     minDate: next_day,
+        //     fixedHeight: true,
+        //     firstDate: 1,
+        //     selectedDates: selected_dates,
+        //     dateFormat: 'dd-MM-yyyy',
+        //     onSelect: function({date, formattedDate, datepicker}) {
+        //         cart.fillDate(formattedDate)
+        //     }
+        // });
 
 
         function showProgress(value) {
