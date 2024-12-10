@@ -90,11 +90,15 @@
             margin-bottom: 3% !important;
         }
         progress {
-            --bulma-progress-value-background-color: red;
-            /* --bulma-progress-value-background-color: var(--tg-theme-button-color) !important; */
+            /* --bulma-progress-value-background-color: red; */
+            --bulma-progress-value-background-color: var(--tg-theme-button-color) !important;
         }
         .clicked {
             background-color: var(--tg-theme-button-color);
+        }
+
+        .datetimepicker .datepicker-nav {
+            background-color: var(--tg-theme-button-color) !important;
         }
         
     </style>
@@ -256,22 +260,7 @@
 
         calendars[0].on('select', ins => {
             cart.fillDate(ins.data.value())
-           
         })
-
-        // let date_picker = new AirDatepicker('#datepicker', {
-        //     inline: true,
-        //     startDate: new Date(),
-        //     minDate: next_day,
-        //     fixedHeight: true,
-        //     firstDate: 1,
-        //     selectedDates: selected_dates,
-        //     dateFormat: 'dd-MM-yyyy',
-        //     onSelect: function({date, formattedDate, datepicker}) {
-        //         cart.fillDate(formattedDate)
-        //     }
-        // });
-
 
         function showProgress(value) {
             let pBar = document.querySelector("progress")
