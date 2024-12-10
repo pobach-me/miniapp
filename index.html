@@ -150,9 +150,18 @@
             <div class="hidden result">
                 <div class="columns">
                     <div class="column is-full has-text-centered">
-                        <h3>вы записаны!!!</h3>
                         <div id="result-description"></div>
-                        <button data-tx="result" class="button btn is-fullwidth">ok</button>
+                        <div id="notify" class="block mt-6">
+                            <button class="button is-rounded">Напомнить за: </button>
+                            <button class="btn button is-rounded" data-notify="1">1 час</button>
+                            <button class="btn button is-rounded" data-notify="2">2 часа</button>
+                            <button class="btn button is-rounded" data-notify="3">3 часа</button>
+                            <button class="btn button is-rounded" data-notify="5">5 часов</button>
+                            <button class="btn button is-rounded" data-notify="5">8 часов</button>
+                            <button class="btn button is-rounded" data-notify="12">12 часов</button>
+                            <button class="btn button is-rounded" data-notify="24">24 часа</button>
+                            <button class="btn button is-rounded" data-notify="-1">не напоминать</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -177,6 +186,7 @@
             #procedure_id = -1;
             #date;
             #time;
+            #notify;
             
             constructor() {
 
@@ -194,6 +204,10 @@
                 this.#time = time;
             }
 
+            fillNotify(notify) {
+                this.#notify = notify;
+            }
+
             hasDate() {
                 return this.#date != null;
             }
@@ -206,7 +220,8 @@
                 return {
                     'procedure_id': this.#procedure_id,
                     'date': this.#date,
-                    'time': this.#time
+                    'time': this.#time,
+                    'notify': this.#notify
                 }
             }
         }
@@ -305,7 +320,27 @@
             u(".procedure-time").removeClass("clicked");
             u(el.target).addClass("clicked");
             u("#calendar-btn").attr('disabled', false)
-        })
+            showProgress(90);
+        });
+
+        document.getElementById("notify").addEventListener('click', (el) => {
+            if (el.target == null) {
+                return
+            }
+            
+            if (el.target.dataset == null) {
+                return
+            }
+
+            if (el.target.dataset.notify == null) {
+                return
+            }
+
+            cart.fillNotify(parseInt(el.target.dataset.notify, 10))
+            // close tg
+            showProgress(100)
+            c(cart.toObj())
+        });
 
         let buttons = document.querySelectorAll(".btn")
 
@@ -317,17 +352,15 @@
                     cart.fillProcedure(el.target.dataset.procedure)
                     u(".procedure").addClass("hidden");
                     u(".calendar").removeClass("hidden");
-                    showProgress(60);
+                    showProgress(30);
                 }
                 if (tx == 'calendar') {
                     u(".calendar").addClass("hidden");
                     u(".result").removeClass("hidden")
-                    showProgress(90);
+                    showProgress(60);
                 }
                 if (tx == 'result') {
-                    showProgress(100)
                     u("#result-description").html(JSON.stringify(cart.toObj()))
-                    console.log(cart.toObj())
                     u(".calendar").addClass("hidden");
                     u(".result").removeClass("hidden")
                 }
